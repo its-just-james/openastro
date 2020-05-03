@@ -154,7 +154,7 @@ class openAstroCfg:
 		#sqlite databases
 		self.astrodb = os.path.join(self.astrodir, 'astrodb.sql')
 		self.peopledb = os.path.join(self.astrodir, 'peopledb.sql')
-		self.famousdb = os.path.join(DATADIR, 'famous.sql' )
+		# self.famousdb = os.path.join(DATADIR, 'famous.sql' )  ## bah to celevrity
 		return
 
 	def checkSwissEphemeris(self,num):
@@ -791,75 +791,75 @@ class openAstroSqlite:
 		return dict
 
 
-	def getDatabaseFamous(self,limit="2000",search=None):
-		self.flink = sqlite3.connect(cfg.famousdb)
-		self.flink.row_factory = sqlite3.Row
-		self.fcursor = self.flink.cursor()
-
-		if search:
-			sql='SELECT * FROM famous WHERE year>? AND \
-			(lastname LIKE ? OR firstname LIKE ? OR name LIKE ?)\
-			 LIMIT %s'%(limit)
-			self.fcursor.execute(sql,(1800,search,search,search))
-		else:
-			sql='SELECT * FROM famous WHERE year>? LIMIT %s'%(limit)
-			self.fcursor.execute(sql,(1800,))
-
-		oldDB=self.fcursor.fetchall()
-
-		self.fcursor.close()
-		self.flink.close()
-
-		#process database
-		newDB = []
-		for a in range(len(oldDB)):
-			#minus years
-			if oldDB[a][12] == '571/': #Muhammad
-				year = 571
-			elif oldDB[a][12] <= 0:
-				year = 1
-			else:
-				year = oldDB[a][12]
-
-			month = oldDB[a][13]
-			day = oldDB[a][14]
-			hour = oldDB[a][15]
-			h,m,s = openAstro.decHour(hour)
-
-			#aware datetime object
-			dt_input = datetime.datetime(year,month,day,h,m,s)
-			dt = pytz.timezone(oldDB[a][20]).localize(dt_input)
-
-			#naive utc datetime object
-			dt_utc = dt.replace(tzinfo=None) - dt.utcoffset()
-			#timezone
-			timezone=openAstro.offsetToTz(dt.utcoffset())
-			year = dt_utc.year
-			month = dt_utc.month
-			day = dt_utc.day
-			hour = openAstro.decHourJoin(dt_utc.hour,dt_utc.minute,dt_utc.second)
-
-			newDB.append({
-						"id":oldDB[a][0], #id INTEGER
-						"name":str(a+1)+". "+oldDB[a][3]+" "+oldDB[a][4], #name
-						"year":year, #year
-						"month":month, #month
-						"day":day, #day
-						"hour":hour, #hour
-						"geolon":oldDB[a][18], #geolon
-						"geolat":oldDB[a][17], #geolat
-						"altitude":"25", #altitude
-						"location":oldDB[a][16], #location
-						"timezone":timezone, #timezone
-						"notes":"",#notes
-						"image":"",#image
-						"countrycode":oldDB[a][8], #countrycode
-						"geonameid":oldDB[a][19], #geonameid
-						"timezonestr":oldDB[a][20], #timezonestr
-						"extra":"" #extra
-						})
-
-		return newDB
+	# def getDatabaseFamous(self,limit="2000",search=None):
+	# 	self.flink = sqlite3.connect(cfg.famousdb)
+	# 	self.flink.row_factory = sqlite3.Row
+	# 	self.fcursor = self.flink.cursor()
+    #
+	# 	if search:
+	# 		sql='SELECT * FROM famous WHERE year>? AND \
+	# 		(lastname LIKE ? OR firstname LIKE ? OR name LIKE ?)\
+	# 		 LIMIT %s'%(limit)
+	# 		self.fcursor.execute(sql,(1800,search,search,search))
+	# 	else:
+	# 		sql='SELECT * FROM famous WHERE year>? LIMIT %s'%(limit)
+	# 		self.fcursor.execute(sql,(1800,))
+    #
+	# 	oldDB=self.fcursor.fetchall()
+    #
+	# 	self.fcursor.close()
+	# 	self.flink.close()
+    #
+	# 	#process database
+	# 	newDB = []
+	# 	for a in range(len(oldDB)):
+	# 		#minus years
+	# 		if oldDB[a][12] == '571/': #Muhammad
+	# 			year = 571
+	# 		elif oldDB[a][12] <= 0:
+	# 			year = 1
+	# 		else:
+	# 			year = oldDB[a][12]
+    #
+	# 		month = oldDB[a][13]
+	# 		day = oldDB[a][14]
+	# 		hour = oldDB[a][15]
+	# 		h,m,s = openAstro.decHour(hour)
+    #
+	# 		#aware datetime object
+	# 		dt_input = datetime.datetime(year,month,day,h,m,s)
+	# 		dt = pytz.timezone(oldDB[a][20]).localize(dt_input)
+    #
+	# 		#naive utc datetime object
+	# 		dt_utc = dt.replace(tzinfo=None) - dt.utcoffset()
+	# 		#timezone
+	# 		timezone=openAstro.offsetToTz(dt.utcoffset())
+	# 		year = dt_utc.year
+	# 		month = dt_utc.month
+	# 		day = dt_utc.day
+	# 		hour = openAstro.decHourJoin(dt_utc.hour,dt_utc.minute,dt_utc.second)
+    #
+	# 		newDB.append({
+	# 					"id":oldDB[a][0], #id INTEGER
+	# 					"name":str(a+1)+". "+oldDB[a][3]+" "+oldDB[a][4], #name
+	# 					"year":year, #year
+	# 					"month":month, #month
+	# 					"day":day, #day
+	# 					"hour":hour, #hour
+	# 					"geolon":oldDB[a][18], #geolon
+	# 					"geolat":oldDB[a][17], #geolat
+	# 					"altitude":"25", #altitude
+	# 					"location":oldDB[a][16], #location
+	# 					"timezone":timezone, #timezone
+	# 					"notes":"",#notes
+	# 					"image":"",#image
+	# 					"countrycode":oldDB[a][8], #countrycode
+	# 					"geonameid":oldDB[a][19], #geonameid
+	# 					"timezonestr":oldDB[a][20], #timezonestr
+	# 					"extra":"" #extra
+	# 					})
+    #
+	# 	return newDB
 
 	def getSettingsPlanet(self):
 		self.open()
@@ -2825,8 +2825,7 @@ class openAstroInstance:
 		return
 
 ##############
-# MAIN CLASS #
-##############
+2##############
 
 #Main GTK Window
 class mainWindow:
@@ -2868,7 +2867,7 @@ class mainWindow:
 	                     ('EditEvent', Gtk.STOCK_EDIT, _('Edit Event'), None, 'Event Data', self.eventData ),
 	                     ('OpenDatabase', Gtk.STOCK_HARDDISK, _('Open Database'), None, 'Open Database', self.openDatabase ),
 								('QuickOpenDatabase', None, _('Quick Open Database') ),
-	                     ('OpenDatabaseFamous', Gtk.STOCK_HARDDISK, _('Open Famous People Database'), None, 'Open Database Famous', self.openDatabaseFamous ),
+	                     # ('OpenDatabaseFamous', Gtk.STOCK_HARDDISK, _('Open Famous People Database'), None, 'Open Database Famous', self.openDatabaseFamous ),
 	                     ('Settings', None, _('Settings') ),
 	                     ('Special', None, _('Chart Type') ),
 	                     ('ZoomRadio', None, _('Zoom') ),
@@ -2926,7 +2925,7 @@ class mainWindow:
 
 		return
 
-	"""
+"""
 
 	'Extra' Menu Items Functions
 
@@ -3020,6 +3019,11 @@ class mainWindow:
 			#timeoutsocket.setDefaultSocketTimeout(20)
 			s.close()
 		return
+    """
+
+    Check for zoom function
+
+    """
 
 	def zoom(self, action, current):
 		#check for zoom level
@@ -3037,8 +3041,9 @@ class mainWindow:
 		self.draw.queue_draw()
 		self.draw.setSVG(self.tempfilename)
 		return
-
-
+"""
+    Function
+"""
 	def doExport(self, widget):
 
 		chooser = Gtk.FileChooserDialog(parent=self.window,title=None,action=Gtk.FileChooserAction.SAVE,
@@ -3812,30 +3817,30 @@ class mainWindow:
 		dialog.show_all()
 		return
 
-	def openDatabaseFamous(self, widget):
-		self.openDatabase(widget,db.getDatabaseFamous(limit="500"))
+	# def openDatabaseFamous(self, widget):
+	# 	self.openDatabase(widget,db.getDatabaseFamous(limit="500"))
 
-	def nameSearch(self, widget):
-		self.listmodel.clear()
-		self.DB = db.getDatabaseFamous(limit="15",search=self.namesearch.get_text())
-		for i in range(len(self.DB)):
-			h,m,s = openAstro.decHour(float(self.DB[i]["hour"]))
-			dt_utc=datetime.datetime(int(self.DB[i]["year"]),int(self.DB[i]["month"]),int(self.DB[i]["day"]),h,m,s)
-			dt = dt_utc + datetime.timedelta(seconds=float(self.DB[i]["timezone"])*float(3600))
-			birth_date = str(dt.year)+'-%(#1)02d-%(#2)02d %(#3)02d:%(#4)02d:%(#5)02d' % {'#1':dt.month,'#2':dt.day,'#3':dt.hour,'#4':dt.minute,'#5':dt.second}
-			self.listmodel.append([self.DB[i]["name"],birth_date,self.DB[i]["location"],self.DB[i]["id"]])
-		return
+	# def nameSearch(self, widget):
+	# 	self.listmodel.clear()
+	# 	self.DB = db.getDatabaseFamous(limit="15",search=self.namesearch.get_text())
+	# 	for i in range(len(self.DB)):
+	# 		h,m,s = openAstro.decHour(float(self.DB[i]["hour"]))
+	# 		dt_utc=datetime.datetime(int(self.DB[i]["year"]),int(self.DB[i]["month"]),int(self.DB[i]["day"]),h,m,s)
+	# 		dt = dt_utc + datetime.timedelta(seconds=float(self.DB[i]["timezone"])*float(3600))
+	# 		birth_date = str(dt.year)+'-%(#1)02d-%(#2)02d %(#3)02d:%(#4)02d:%(#5)02d' % {'#1':dt.month,'#2':dt.day,'#3':dt.hour,'#4':dt.minute,'#5':dt.second}
+	# 		self.listmodel.append([self.DB[i]["name"],birth_date,self.DB[i]["location"],self.DB[i]["id"]])
+	# 	return
 
-	def nameSearchReset(self, widget):
-		self.listmodel.clear()
-		self.DB = db.getDatabaseFamous(limit="500")
-		for i in range(len(self.DB)):
-			h,m,s = openAstro.decHour(float(self.DB[i]["hour"]))
-			dt_utc=datetime.datetime(int(self.DB[i]["year"]),int(self.DB[i]["month"]),int(self.DB[i]["day"]),h,m,s)
-			dt = dt_utc + datetime.timedelta(seconds=float(self.DB[i]["timezone"])*float(3600))
-			birth_date = str(dt.year)+'-%(#1)02d-%(#2)02d %(#3)02d:%(#4)02d:%(#5)02d' % {'#1':dt.month,'#2':dt.day,'#3':dt.hour,'#4':dt.minute,'#5':dt.second}
-			self.listmodel.append([self.DB[i]["name"],birth_date,self.DB[i]["location"],self.DB[i]["id"]])
-		return
+	# def nameSearchReset(self, widget):
+	# 	self.listmodel.clear()
+	# 	self.DB = db.getDatabaseFamous(limit="500")
+	# 	for i in range(len(self.DB)):
+	# 		h,m,s = openAstro.decHour(float(self.DB[i]["hour"]))
+	# 		dt_utc=datetime.datetime(int(self.DB[i]["year"]),int(self.DB[i]["month"]),int(self.DB[i]["day"]),h,m,s)
+	# 		dt = dt_utc + datetime.timedelta(seconds=float(self.DB[i]["timezone"])*float(3600))
+	# 		birth_date = str(dt.year)+'-%(#1)02d-%(#2)02d %(#3)02d:%(#4)02d:%(#5)02d' % {'#1':dt.month,'#2':dt.day,'#3':dt.hour,'#4':dt.minute,'#5':dt.second}
+	# 		self.listmodel.append([self.DB[i]["name"],birth_date,self.DB[i]["location"],self.DB[i]["id"]])
+	# 	return
 
 	def openDatabase(self, widget, extraDB=None):
 		self.win_OD = Gtk.Window(Gtk.WindowType.TOPLEVEL)
@@ -4491,7 +4496,11 @@ class mainWindow:
 		self.win_SC.show_all()
 		return
 
-	def settingsConfigurationSubmit(self, widget, data):
+"""
+    Configuration Function
+"""
+
+    def settingsConfigurationSubmit(self, widget, data):
 		update=False
 		if data['use_geonames.org'].get_active():
 			db.setAstrocfg("use_geonames.org","1")
