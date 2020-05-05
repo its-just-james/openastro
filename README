@@ -68,16 +68,22 @@ Lists (planetary hours, firdaria calculations ..)
 Installation:
 
 NOTE: This code is alpha at best and subject to major changes.
-		  Installation currently is experimental.
+Installation currently is experimental and best suited to a clean virtualenv. I'm using pyenv.
    sudo setup.py install
 
 running the program:
    openastro
 
 dependencies:
+NOTE: Your mileage may vary.  The packages listed below are rough approximations of the needs on a modern (19.10) Ubuntu based distro. These installation instructions are also very alpha, and will be soon expanded for various major package managers.
+	gtk2
+	cairo
+	python (preferably 3)
   python-gtk2
   python-dateutil
-  python-gnome2-desktop (>= 2.16) /* for python bindings to librsvg, pyrsvg */
+  python-gi
+	python-gi-cairo
+	python-gnome2-desktop (>= 2.16) /* for python bindings to librsvg, pyrsvg */
   python-cairo (>= 1.2.0)
   librsvg2-bin (for rsvg-convert binary)
   imagemagick /* export features */
