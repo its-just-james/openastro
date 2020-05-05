@@ -38,7 +38,9 @@ import sys, os.path, gettext
 # require_version('Rsvg', '2.0')
 # require_version('Gtk', '3.0')
 # from gi.repository import Gtk, Gdk, GObject, Rsvg, cairo
-
+from gi import require_version
+require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
 #internal openastro modules
 #sys.path.append("/usr/lib/python3.5/dist-packages") #trying to 'fix' some problems importing openastromod on some distros
