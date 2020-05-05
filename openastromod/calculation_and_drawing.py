@@ -19,6 +19,11 @@
 #basics
 import math, codecs, datetime, pytz
 
+from gi import require_version
+require_version('Rsvg', '2.0')
+require_version('Gtk', '3.0')
+from gi.repository import Gdk, Rsvg
+
 #calculation and svg drawing class
 ## should this be two distinct classes?
 class openAstroInstance:
@@ -40,7 +45,7 @@ class openAstroInstance:
 		self.home_location,self.home_geolat,self.home_geolon,self.home_countrycode,self.home_timezonestr = db.getSettingsLocation()
 		if self.home_location == '' or self.home_geolat == '' or self.home_geolon == '':
 			dprint('Unknown home location, asking for new')
-			self.ask_for_home = True ##defined in 
+			self.ask_for_home = True ##defined in
 			self.home_location='Amsterdam'
 			self.home_geolon=6.219530
 			self.home_geolat=52.120710

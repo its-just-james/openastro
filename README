@@ -68,7 +68,7 @@ Lists (planetary hours, firdaria calculations ..)
 Installation:
 
 NOTE: This code is alpha at best and subject to major changes.
-Installation currently is experimental and best suited to a clean virtualenv. I'm using pyenv.
+Installation currently is experimental and best suited to a clean virtualenv. I'm using pyenv, currently in python 3.6.9, in eoan ermine.
    sudo setup.py install
 
 running the program:
