@@ -43,7 +43,7 @@ from xml.dom.minidom import parseString
 #internal openastro modules
 #sys.path.append("/usr/lib/python3.5/dist-packages") #trying to 'fix' some problems importing openastromod on some distros
 #sys.path.append("/usr/lib/python3.5/site-packages") #trying to 'fix' some problems importing openastromod on some distros
-from openastromod import zonetab, geoname, importfile, dignities, swiss as ephemeris, configuration, dtatbase, calculation_and_drawing
+from openastromod import zonetab, geoname, importfile, dignities, swiss as ephemeris, configuration, database, calculation_and_drawing
 
 #debug
 LOCAL=False
@@ -139,8 +139,8 @@ def main():
 #start the whole bunch
 
 if __name__ == "__main__":
-	cfg = openAstroCfg()
-	db = openAstroSqlite()
-	openAstro = openAstroInstance()
-	mainWindow()
+	cfg = configuration.openAstroCfg()
+	db = database.openAstroSqlite()
+	openAstro = calculation_and_drawing.openAstroInstance()
+	mainwindow.mainWindow()
 	main()
