@@ -18,7 +18,7 @@
 """
 
 #basics
-import sys, os.path, datetime, gettext
+import sys, os.path, gettext
 
 #copyfile
 # from shutil import copyfile

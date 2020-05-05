@@ -17,7 +17,7 @@
     along with OpenAstro.org.  If not, see <http://www.gnu.org/licenses/>.
 """
 #basics
-import math, codecs
+import math, codecs, datetime, pytz
 
 #calculation and svg drawing class
 ## should this be two distinct classes?
