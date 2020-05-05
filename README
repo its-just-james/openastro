@@ -1,4 +1,74 @@
-installation: 
+
+Introduction
+This is the development repository for the continuation of the excellent open source astrology program openastro, which is originally authored by Pelle van der Scheer.
+The website is at https://openastro.org .
+
+
+OpenAstro is currently available in the following languages:
+
+Arabic (partial)
+Brazilian Portuguese
+Bulgarian
+Catalan
+Chinese (Traditional)
+Czech
+Danish
+Dutch
+English
+Esperanto (partial)
+Finnish
+French
+German
+Greek
+Hungarian
+Italian
+Japanese (partial)
+Low German
+Bokmal Norvegian
+Polish
+Romany
+Russian
+Spanish
+Swedish
+Ukrainian (partial)
+
+
+Features
+Natal/Radix Charts
+Transit Charts
+Synastry/Combine/Composite Charts
+Solar Return / Secondary Progressions
+Customizeable Planets & Aspects
+Additional celestial bodies: Chiron, Pholus, Ceres, Pallas, Juno, Vesta
+Fictional points: North/South Node, Day/Night Pars
+Cusp Aspects
+Monthly Timeline
+European and Traditional chart view
+Online Atlas (Geocoder) using google maps (virtually every location)
+Offline Atlas (Geonames) with about 80.000 major cities!
+Database export/import, Save as JPG, PNG, SVG, OAC
+Import from skylendar (*.skif), oroboros (*.xml)
+Import from astrolog32 (*.dat), zet8 dbase (*.zds)
+Ephemeris files for 1800 AD - 2400 AD (download seperately)
+Features in Progress
+Database with over 3000 celebrities
+Builds for other distro's (Mandriva, openSuse, Fedora, PCLinuxOS ...)
+Sidereal Zodiac
+User-defined Coordinates and Time-zone
+More chart calculations (ex. Primary progressions)
+More stars/arabic parts
+Color themes
+Tabbed charts
+Multiple databases
+Ephemeris files for 5000BC to 5000AD
+Essential and accidental dignities and debilities
+Lists (planetary hours, firdaria calculations ..)
+
+
+Installation:
+
+NOTE: This code is alpha at best and subject to major changes.
+		  Installation currently is experimental.
    sudo setup.py install
 
 running the program:
