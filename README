@@ -50,8 +50,9 @@ Database export/import, Save as JPG, PNG, SVG, OAC
 Import from skylendar (*.skif), oroboros (*.xml)
 Import from astrolog32 (*.dat), zet8 dbase (*.zds)
 Ephemeris files for 1800 AD - 2400 AD (download seperately)
+
+
 Features in Progress
-Database with over 3000 celebrities
 Builds for other distro's (Mandriva, openSuse, Fedora, PCLinuxOS ...)
 Sidereal Zodiac
 User-defined Coordinates and Time-zone
@@ -83,7 +84,7 @@ NOTE: Your mileage may vary.  The packages listed below are rough approximations
   python-dateutil
   python-gi
 	python-gi-cairo
-	python-gnome2-desktop (>= 2.16) /* for python bindings to librsvg, pyrsvg */
+	(obsolete)python-gnome2-desktop (>= 2.16)
   python-cairo (>= 1.2.0)
   librsvg2-bin (for rsvg-convert binary)
   imagemagick /* export features */
