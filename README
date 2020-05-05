@@ -84,7 +84,7 @@ NOTE: Your mileage may vary.  The packages listed below are rough approximations
   python-dateutil
   python-gi
 	python-gi-cairo
-	(obsolete)python-gnome2-desktop (>= 2.16)
+	(obsolete, replaced by gnome instrospection object, aka "gi") python-gnome2-desktop (>= 2.16)
   python-cairo (>= 1.2.0)
   librsvg2-bin (for rsvg-convert binary)
   imagemagick /* export features */

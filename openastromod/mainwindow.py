@@ -17,7 +17,7 @@
     along with OpenAstro.org.  If not, see <http://www.gnu.org/licenses/>.
 """
 # basics
-import math, socket, webbrowser, pytz
+import os.path, math, socket, webbrowser, pytz
 
 #template processing
 from string import Template
@@ -2053,7 +2053,7 @@ class mainWindow:
 			#0=degree, 1=name, 2=color, 3=is_major, 4=orb
 			data.append({})
 			data[-1]['icon'] = Gtk.Image()
-			filename=os.path.join(cfg.iconAspects,str(openAstro.aspects[i]['degree'])+'.svg')
+			filename=.join(cfg.iconAspects,str(openAstro.aspects[i]['degree'])+'.svg')
 			data[-1]['icon'].set_from_file(filename)
 			data[-1]['degree'] = openAstro.aspects[i]['degree']
 			data[-1]['degree_str'] = Gtk.Label(str(openAstro.aspects[i]['degree']))
