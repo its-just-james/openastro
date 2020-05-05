@@ -226,7 +226,7 @@ class mainWindow:
 			socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM)
 		except socket.error as msg:
 			self.iconn = False
-			dprint('iconn: no connection (getaddrinfo)')
+			dprint('No Internet connection (getaddrinfo)')
 			return
 
 		for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
@@ -246,10 +246,10 @@ class mainWindow:
 
 		if s is None:
 			self.iconn = False
-			dprint('iconn: no connection')
+			dprint('No Internet connection')
 		else:
 			self.iconn = True
-			dprint('iconn: got connection')
+			dprint('Connected to Internet')
 			#timeoutsocket.setDefaultSocketTimeout(20)
 			s.close()
 		return

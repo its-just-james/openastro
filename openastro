@@ -30,8 +30,8 @@ import sys, os.path, gettext
 # #template processing
 # from string import Template
 
-#minidom parser
-from xml.dom.minidom import parseString
+#minidom parser for openasrtro/inputfile.py?
+# from xml.dom.minidom import parseString
 
 #GTK, cairo to display svg
 # from gi import require_version

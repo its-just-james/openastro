@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
     This file is part of openastro.org.
@@ -43,7 +43,7 @@ def _getText(nodelist):
 	return rc
 
 def search(name='',country=''):
-	
+
 	"""Search function for geonames.org api
 		name must be supplied
 		country is optional, 2 character country code
@@ -52,7 +52,7 @@ def search(name='',country=''):
 	if name == '':
 		print('No name specified!')
 		return None
-		
+
 	#open connection and read xml
 	params = urlencode({'q': name,'country':country,'maxRows':1,'featureClass':'P','username': 'openastro.org'})
 
@@ -65,13 +65,13 @@ def search(name='',country=''):
 	except timeout:
 		print('Timeout on search!')
 		return None
-	
+
 	data = f.read()
 	dom = parseString(data)
 
 	#totalResultsCount
 	totalResultsCount = _getText(dom.getElementsByTagName("totalResultsCount")[0].childNodes)
-	
+
 	#geoname
 	geoname=[]
 	for i in dom.getElementsByTagName("geoname"):
@@ -85,7 +85,7 @@ def search(name='',country=''):
 		geoname[-1]['fcl']=_getText(i.getElementsByTagName("fcl")[0].childNodes)
 		geoname[-1]['fcode']=_getText(i.getElementsByTagName("fcode")[0].childNodes)
 		#get timezone
-		tparams = urlencode({'lat':geoname[-1]['lat'],'lng':geoname[-1]['lng'],'username':'openastro.org'})		
+		tparams = urlencode({'lat':geoname[-1]['lat'],'lng':geoname[-1]['lng'],'username':'openastro.org'})
 		try:
 			f = urlopen("http://api.geonames.org/timezone?%s" % tparams, timeout=20)
 		except (HTTPError, URLError) as error:
@@ -101,7 +101,7 @@ def search(name='',country=''):
 		break
 	#close dom
 	dom.unlink()
-	
+
 	#return results
 	if totalResultsCount == "0":
 		print("No results!")

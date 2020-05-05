@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
     This file is part of openastro.org.
@@ -33,8 +33,8 @@ class ephData:
 	def __init__(self,year,month,day,hour,geolon,geolat,altitude,planets,zodiac,openastrocfg,houses_override=None):
 		#ephemeris path (default "/usr/share/swisseph:/usr/local/share/swisseph")
 		swe.set_ephe_path(ephe_path)
-		
-		#basic location		
+
+		#basic location
 		self.jul_day_UT=swe.julday(year,month,day,hour)
 		self.geo_loc = swe.set_topo(geolon,geolat,altitude)
 
@@ -44,7 +44,7 @@ class ephData:
 		self.planets_degree_ut = list(range(len(planets)))
 		self.planets_info_string = list(range(len(planets)))
 		self.planets_retrograde = list(range(len(planets)))
-		
+
 		#iflag
 		"""
 		#define SEFLG_JPLEPH         1L     // use JPL ephemeris
@@ -63,7 +63,7 @@ class ephData:
 		#define SEFLG_RADIANS        8192L     // coordinates in radians, not degrees
 		#define SEFLG_BARYCTR        16384L     // barycentric positions
 		#define SEFLG_TOPOCTR      (32*1024L)     // topocentric positions
-		#define SEFLG_SIDEREAL     (64*1024L)     // sidereal positions 		
+		#define SEFLG_SIDEREAL     (64*1024L)     // sidereal positions
 		"""
 		#check for apparent geocentric (default), true geocentric, topocentric or heliocentric
 		iflag=swe.FLG_SWIEPH+swe.FLG_SPEED
@@ -92,12 +92,12 @@ class ephData:
 						self.planets_degree[i] = ret_flag[0] - deg_low
 						self.planets_degree_ut[i] = ret_flag[0]
 						#if latitude speed is negative, there is retrograde
-						if ret_flag[3] < 0:						
+						if ret_flag[3] < 0:
 							self.planets_retrograde[i] = True
 						else:
 							self.planets_retrograde[i] = False
 
-							
+
 		#available house systems:
 		"""
 		hsys= 		‘P’     Placidus
@@ -118,7 +118,7 @@ class ephData:
 		#check for polar circle latitude < -66 > 66
 		if houses_override:
 			self.jul_day_UT = swe.julday(houses_override[0],houses_override[1],houses_override[2],houses_override[3])
-			
+
 		if geolat > 66.0:
 			geolat = 66.0
 			print("polar circle override for houses, using 66 degrees")
@@ -136,21 +136,21 @@ class ephData:
 
 		#arabic parts
 		sun,moon,asc = self.planets_degree_ut[0],self.planets_degree_ut[1],self.houses_degree_ut[0]
-		dsc,venus = self.houses_degree_ut[6],self.planets_degree_ut[3]	
+		dsc,venus = self.houses_degree_ut[6],self.planets_degree_ut[3]
 
 		#offset
 		offset = moon - sun
-		
+
 		#if planet degrees is greater than 360 substract 360 or below 0 add 360
 		for i in range(len(self.houses_degree_ut)):
 			#add offset
 			#self.houses_degree_ut[i] += offset
-			
+
 			if self.houses_degree_ut[i] > 360.0:
 				self.houses_degree_ut[i] = self.houses_degree_ut[i] - 360.0
 			elif self.houses_degree_ut[i] < 0.0:
-				self.houses_degree_ut[i] = self.houses_degree_ut[i] + 360.0		
-		
+				self.houses_degree_ut[i] = self.houses_degree_ut[i] + 360.0
+
 
 		self.houses_degree = list(range(len(self.houses_degree_ut)))
 		self.houses_sign = list(range(len(self.houses_degree_ut)))
@@ -162,8 +162,8 @@ class ephData:
 					if self.houses_degree_ut[i] <= deg_high:
 						self.houses_sign[i]=x
 						self.houses_degree[i] = self.houses_degree_ut[i] - deg_low
-						
-		
+
+
 		#mean apogee
 		bm=self.planets_degree_ut[12]
 		#mean north node
@@ -185,7 +185,7 @@ class ephData:
 		#print ps
 		#print moon
 		#print pl
-		
+
 		c= 1.517 * math.sin(2*math.radians(sun-mn))
 		c+= -0.163 * math.sin(math.radians(sun-ps))
 		c+= -0.128 * math.sin(2*math.radians(moon-sun))
@@ -203,7 +203,7 @@ class ephData:
 		c+= 0.005 * math.sin(math.radians(3*moon-pl-2*mn))
 		c+= -0.005 * math.sin(math.radians(3*moon-pl-2*sun))
 		#print c
-		
+
 		sbm=sun-bm
 		if sbm < 0: sbm += 360
 		if sbm > 180.0: sbm -= 180
@@ -264,7 +264,7 @@ class ephData:
 		"""
 		c+= - 0.117 * math.sin(math.radians(sun-ps))
 		#print c
-		
+
 		#c+= x * -0.163 * math.sin(math.radians(sun-ps))
 		#c+= x * -0.128 * math.sin(2*math.radians(moon-sun))
 		#c+= x * 0.120 * math.sin(2*math.radians(moon-bm))
@@ -280,7 +280,7 @@ class ephData:
 		#c+= x * -0.007 * math.sin(math.radians(2*moon+pl-3*sun))
 		#c+= x * 0.005 * math.sin(math.radians(3*moon-pl-2*bm))
 		#c+= x * -0.005 * math.sin(math.radians(3*moon-pl-2*sun))
-		
+
 
 		#compute additional points and angles
 		#list index 23 is asc, 24 is Mc, 25 is Dsc, 26 is Ic
@@ -288,7 +288,7 @@ class ephData:
 		self.planets_degree_ut[24] = self.houses_degree_ut[9]
 		self.planets_degree_ut[25] = self.houses_degree_ut[6]
 		self.planets_degree_ut[26] = self.houses_degree_ut[3]
-		
+
 		#list index 27 is day pars
 		self.planets_degree_ut[27] = asc + (moon - sun)
 		#list index 28 is night pars
@@ -312,7 +312,7 @@ class ephData:
 		for i in range(23,35):
 			while ( self.planets_degree_ut[i] < 0 ): self.planets_degree_ut[i]+=360.0
 			while ( self.planets_degree_ut[i] > 360.0): self.planets_degree_ut[i]-=360.0
-	
+
 			#get zodiac sign
 			for x in range(12):
 				deg_low=float(x*30.0)
@@ -343,7 +343,7 @@ class ephData:
 					"moon_phase":mphase,
 					"sun_phase":sphase
 		}
-		
+
 		#close swiss ephemeris
 		swe.close()
 

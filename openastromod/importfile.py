@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
     This file is part of openastro.org.
@@ -32,10 +32,10 @@ def _getText(nodelist):
 	return rc
 
 def getOAC(filename):
-	f=open(filename)	
+	f=open(filename)
 	dom = parseString(f.read())
 	f.close()
-	
+
 	valid=['name','datetime','location','altitude','latitude','longitude','countrycode',
 			'timezone','geonameid','extra']
 	output=[]
@@ -43,7 +43,7 @@ def getOAC(filename):
 		output.append({})
 		for i in range(len(valid)):
 			output[-1][valid[i]]=_getText(a.getElementsByTagName(valid[i])[0].childNodes)
-			
+
 	#close dom
 	dom.unlink()
 	#return results
@@ -78,7 +78,7 @@ def getSkylendar(filename):
 		output[-1]['year']=a.getElementsByTagName('DATE')[0].attributes['Year'].value
 		output[-1]['month']=a.getElementsByTagName('DATE')[0].attributes['Month'].value
 		output[-1]['day']=a.getElementsByTagName('DATE')[0].attributes['Day'].value
-		
+
 		tz=a.getElementsByTagName('DATE')[0].attributes['Timezone'].value.split(':')
 		if float(tz[0]) < 0:
 			output[-1]['timezone']=float(tz[0])+(float(tz[1]/60.0)/-1)
@@ -90,37 +90,37 @@ def getSkylendar(filename):
 		output[-1]['hour']=hm.split(':')[0]
 		output[-1]['minute']=hm.split(':')[1]
 		output[-1]['location']=_getText(a.getElementsByTagName('PLACE')[0].childNodes)
-		
+
 		lat=a.getElementsByTagName('PLACE')[0].attributes['Latitude'].value.split(':')
 		if float(lat[0]) < 0:
 			output[-1]['latitude'] = float(lat[0])+(float(lat[1]/60.0)/-1)
 		else:
 			output[-1]['latitude'] = float(lat[0])+float(lat[1]/60.0)
-			
+
 		lon=a.getElementsByTagName('PLACE')[0].attributes['Longitude'].value.split(':')
 		if float(lon[0]) < 0:
 			output[-1]['longitude'] = float(lon[0])+(float(lon[1]/60.0)/-1)
 		else:
 			output[-1]['longitude'] = float(lon[0])+float(lon[1]/60.0)
-					
+
 		output[-1]['zoneinfofile']=a.getElementsByTagName('COUNTRY')[0].attributes['ZoneInfoFile'].value
 		output[-1]['countryname']=_getText(a.getElementsByTagName('COUNTRY')[0].childNodes)
-		
+
 		dom.unlink()
 	return output
-	
+
 def getAstrolog32(filename):
 	"""
 	examples:
 @0102  ; Astrolog chart info.
 /qb 6 23 1972  3:00:00 ST -1:00   5:24:00E 43:18:00N
-/zi "Zinedine Zidane" "Marseille"	
+/zi "Zinedine Zidane" "Marseille"
 @0102  ; Astrolog32 chart info.
 
 ; Date is in American format: month day year.
 
 /qb 10 27 1980 10:20:00 ST -1:00  14:39'00E 50:11'00N
-/zi "Honzik" "Brandys nad Labem"	
+/zi "Honzik" "Brandys nad Labem"
 	"""
 	d={}
 	h=open(filename)
@@ -166,8 +166,8 @@ def getAstrolog32(filename):
 			if len(lon) > 3:
 				d['latitude']+=float(lon[2])/3600.0
 			if lon[-1] == 'S':
-				d['latitude'] = d['latitude']/-1.0			
-			
+				d['latitude'] = d['latitude']/-1.0
+
 		if line[0:3] == "/zi":
 			s0=line.strip().split('"')
 			s=[]
@@ -178,4 +178,3 @@ def getAstrolog32(filename):
 			d['location']=s[2]
 	f.close()
 	return [d]
-

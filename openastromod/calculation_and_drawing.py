@@ -40,7 +40,7 @@ class openAstroInstance:
 		self.home_location,self.home_geolat,self.home_geolon,self.home_countrycode,self.home_timezonestr = db.getSettingsLocation()
 		if self.home_location == '' or self.home_geolat == '' or self.home_geolon == '':
 			dprint('Unknown home location, asking for new')
-			self.ask_for_home = True
+			self.ask_for_home = True ##defined in 
 			self.home_location='Amsterdam'
 			self.home_geolon=6.219530
 			self.home_geolat=52.120710
