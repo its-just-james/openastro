@@ -208,12 +208,14 @@ class mainWindow:
 	Function to check if we have an internet connection
 	for geonames.org geocoder
 
+	checkInternetConnection
+
 	"""
 	def checkInternetConnection(self):
 
 		if db.getAstrocfg('use_geonames.org') == "0":
 			self.iconn = False
-			dprint('iconn: not using geocoding!')
+			dprint('Geocoding disabled, no Internet connection')
 			return
 
 		#from openastromod import timeoutsocket
@@ -256,7 +258,9 @@ class mainWindow:
 
 	"""
 
-	Check for zoom function
+	Check/set for zoom function
+
+	zoom
 
 	"""
 
@@ -278,7 +282,40 @@ class mainWindow:
 		return
 
 	"""
-	Export Function
+	Export and Utility Functions
+
+	doExport
+	doImport
+	specialRadix
+	specialTransit
+	specialSolar
+	specialSolarSubmit
+	specialSecondaryProgression
+	specialSecondaryProgressionSubmit
+	tableMonthlyTimeline
+	tableMonthlyTimelinePrint
+	tableMonthlyTimelinePrintBegin
+	tableMonthlyTimelinePrintDraw
+	tableMonthlyTimelinePrintShow
+	tableCuspAspects
+	aboutInfo
+	# openDatabaseFamous
+	# nameSearch
+	# nameSearchReset
+	openDatabase
+	openDatabaseSelect
+	openDatabaseSelectReject
+	openDatabaseSelectReturn
+	openDatabaseDel
+	openDatabaseDelDo
+	openDatabaseOpen
+	openDatabaseEdit
+	openDatabaseEditAsk
+	openDatabaseEditSave
+	doPrint
+	doPrintBegin
+	doPrintDraw
+
 	"""
 
 	def doExport(self, widget):
@@ -620,7 +657,7 @@ class mainWindow:
 			settings = print_op.get_print_settings()
 
 
-	def tableMonthlyTimelinePrintBegin(self, operation, context, pages):
+	def (self, operation, context, pages):
 		operation.set_n_pages(pages)
 		operation.set_use_full_page(False)
 		ps = Gtk.PageSetup()
@@ -1733,10 +1770,6 @@ class mainWindow:
 		self.win_SC.show_all()
 		return
 
-	"""
-    Configuration Function
-	"""
-
 	def settingsConfigurationSubmit(self, widget, data):
 		update=False
 		if data['use_geonames.org'].get_active():
@@ -1783,7 +1816,6 @@ class mainWindow:
 			self.updateChart()
 		self.win_SC.destroy()
 		return
-
 
 	"""
 
@@ -2265,6 +2297,8 @@ class mainWindow:
 
 	settingsColors
 	settingsColorsSubmit
+	settingsColorsChanger
+	settingsColorsSubmit
 
 	"""
 
@@ -2605,6 +2639,7 @@ class mainWindow:
 
 	Menu item to edit options for label
 
+	settingsLabelReset
 	settingsLabel
 	settingsLabelSubmit
 
@@ -2697,6 +2732,23 @@ class mainWindow:
 	"""
 
 		Update the chart with input list data
+
+		updateChartList
+		updateChart
+		updateChartData
+		updateUI
+		eventDataNew
+		eventData
+		citySearch
+		eventDataChangedContbox
+		eventDataChangedCountrybox
+		eventDataChangedProvbox
+		eventDataChangedCitybox
+		eventDataSaveAsk
+		eventDataSave
+		eventDataSubmit
+		eventDataApply
+		quit_cb
 
 	"""
 
